@@ -1,0 +1,157 @@
+openapi: 3.0.3
+info:
+  title: Viral API
+  description: This is a skeletal Go REST API for tracking viral items.
+  version: "1.0"
+servers:
+  - url: http://localhost:8080/api/v1
+paths:
+  /viral:
+    post:
+      tags:
+        - viral
+      summary: Create a new viral item
+      description: Adds a new item to track across platforms
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/domain.CreateViralRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/domain.ViralItem'
+        '400':
+          description: Bad Request
+  /viral/top:
+    get:
+      tags:
+        - viral
+      summary: Get top viral items
+      description: Returns items sorted by highest view count across all platforms
+      parameters:
+        - name: limit
+          in: query
+          description: Number of items to return
+          required: false
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/domain.ViralItem'
+        '500':
+          description: Internal Server Error
+  /viral/{id}:
+    get:
+      tags:
+        - viral
+      summary: Get a viral item
+      description: Fetch an item by its ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/domain.ViralItem'
+        '404':
+          description: Not Found
+    delete:
+      tags:
+        - viral
+      summary: Delete an item
+      description: Delete a viral item from the database
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No Content
+        '500':
+          description: Internal Server Error
+  /viral/{id}/views:
+    put:
+      tags:
+        - viral
+      summary: Update views
+      description: Update the view count for a specific item
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/domain.UpdateViewsRequest'
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+components:
+  schemas:
+    domain.ViralItem:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        platform:
+          type: string
+        views:
+          type: integer
+        url:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+    domain.CreateViralRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          example: "Funny Cat Video"
+        description:
+          type: string
+          example: "A hilarious video of a cat doing tricks."
+        platform:
+          type: string
+          example: "Youtube"
+        url:
+          type: string
+          example: "https://www.youtube.com/watch?v=dQwtestvideo4w9WgXcQ"
+    domain.UpdateViewsRequest:
+      type: object
+      properties:
+        views:
+          type: integer
+          example: 1500000
