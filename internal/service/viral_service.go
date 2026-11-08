@@ -39,12 +39,13 @@ func (s *viralService) CreateItem(ctx context.Context, req domain.CreateViralReq
 	}
 
 	item := &domain.ViralItem{
-		ID:        uuid.New().String(),
-		Title:     req.Title,
-		Platform:  req.Platform,
-		Views:     0,
-		URL:       req.URL,
-		CreatedAt: time.Now().UTC(),
+		ID:          uuid.New().String(),
+		Title:       req.Title,
+		Description: req.Description,
+		Platform:    req.Platform,
+		Views:       0,
+		URL:         req.URL,
+		CreatedAt:   time.Now().UTC(),
 	}
 
 	av, err := attributevalue.MarshalMap(item)
