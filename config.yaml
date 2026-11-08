@@ -1,0 +1,10 @@
+server:
+  port: "8080"
+postgres:
+  dsn: "postgres://localhost:5432/mydb"
+redis:
+  addr: "redis:6379"
+  password: ""
+  db: 0
+dynamodb:
+  endpoint: "http://localhost:8000"
