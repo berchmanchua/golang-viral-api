@@ -6,7 +6,6 @@ This is just a skeleton Go REST API configured with common dependencies. It leve
 
 * **Dependency Injection:** Utilizes `uber-go/fx` for automatic lifecycle management and graceful shutdowns of database connections and HTTP servers.
 * **Local AWS Emulation:** Fully functional offline development using `amazon/dynamodb-local` and `kinesis-mock` via Docker.
-* **DynamoDB GSIs:** Configured with Global Secondary Indexes for advanced query capabilities (e.g., querying top views across all platforms).
 * **Automated DB Initialization:** Uses an ephemeral Docker container to automatically create DynamoDB tables and schemas on startup.
 
 ## Tech Stack
@@ -27,17 +26,6 @@ This is just a skeleton Go REST API configured with common dependencies. It leve
 ## Getting Started
 
 ### 1. Spin up the infrastructure
-
-Start the API and all dependencies (Postgres, Redis, DynamoDB, Kinesis) using Docker Compose:
-```bash
-docker-compose up --build
-```
-*Note: On startup, the `dynamodb-init` container will automatically run the AWS CLI to create the `ViralItems` table along with its `TopViewsIndex` Global Secondary Index, and then gracefully exit.*
-
-### 2. Run without Docker (Optional)
-
-If you prefer to run the Go application directly on your host machine while keeping the databases in Docker:
-
 1. Start only the data stores:
    ```bash
    docker-compose up -d postgres redis dynamodb-local dynamodb-init kinesis-local
@@ -50,6 +38,7 @@ If you prefer to run the Go application directly on your host machine while keep
    ```bash
    go run ./cmd/api
    ```
+*Note: On startup, the `dynamodb-init` container will automatically run the AWS CLI to create the `ViralItems` table along with its `TopViewsIndex` Global Secondary Index, and then gracefully exit.*
 
 ## Project Structure
 
