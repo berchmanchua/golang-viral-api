@@ -6,7 +6,7 @@ import (
 	"net/http"
 
 	"github.com/berchmanchua/golang-viral-api/internal/config"
-	"github.com/go-chi/chi/v5"
+	chi "github.com/go-chi/chi/v5"
 	"go.uber.org/fx"
 )
 

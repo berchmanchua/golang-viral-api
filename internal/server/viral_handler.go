@@ -6,7 +6,7 @@ import (
 
 	"github.com/berchmanchua/golang-viral-api/internal/domain"
 	"github.com/berchmanchua/golang-viral-api/internal/service"
-	"github.com/go-chi/chi/v5"
+	chi "github.com/go-chi/chi/v5"
 )
 
 type ViralHandler struct {
